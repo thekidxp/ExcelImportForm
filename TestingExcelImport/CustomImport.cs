@@ -1,5 +1,8 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
 using TestingExcelImport.Models;
 
 namespace CustomImport
@@ -30,6 +33,60 @@ namespace CustomImport
                 WrkBook.Close();
             }
         }
+
+        public void ImportDataFromNotePad(string filepath)
+        {
+            string text = System.IO.File.ReadAllText(filepath);
+            System.Windows.Forms.MessageBox.Show(text);
+
+        }
+
+        public void ClearFile(string filepath)
+        {
+            //File.WriteAllText(filepath, String.Empty);
+            using (FileStream fs = File.Create(filepath))
+            {
+                byte[] info = new UTF8Encoding(true).GetBytes("filename\tfunction name\tHR model attribute\r\n");
+                fs.Write(info, 0, info.Length);
+            }
+        }
+
+        //JCM, PL 09/10/2014: we're in ur git, forkin' ur repos.
+        public void WalkDirectories(DirectoryInfo root, string logfilepath)
+        {
+            Regex getSubs = new Regex(@"(Sub|Function) ([\w\W]*?)(End Sub|End Function)");
+            Regex getFuncName = new Regex(@"(Sub|Function) (?<name>[\w]*)");
+            Regex getHRAttributes = new Regex(@"UserModel\.HR\.([^ ^.^)^,^}^\n^\r]*)");
+
+            DirectoryInfo[] subDirectories = root.GetDirectories();
+            FileInfo[] files = root.GetFiles("*.vb");
+
+            foreach (var file in files)
+            {
+                string filepath = file.Directory.ToString() + "\\" + file.ToString();
+                string text = File.ReadAllText(filepath);
+                MatchCollection matches = getSubs.Matches(text);
+                foreach (Match theMatch in matches)
+                {
+                    string thefunc = theMatch.Value.ToString();
+                    Match funcMatch = getFuncName.Match(thefunc);
+                    string funcName = funcMatch.Groups[2].ToString();
+
+                    MatchCollection HRAtrributes = getHRAttributes.Matches(thefunc);
+                    foreach (Match attributeMatch in HRAtrributes)
+                    {
+                        string attribute = attributeMatch.Groups[1].ToString();
+                        File.AppendAllText(logfilepath, file.ToString() + "\t" + funcName + "\t" + attribute + "\r\n");
+                    }
+
+                }
+            }
+            foreach (var subDir in subDirectories)
+            {
+                WalkDirectories(subDir, logfilepath);
+            }
+        }
+
 
         private static void IterateThroughExcelSheet(object[,] arr)
         {

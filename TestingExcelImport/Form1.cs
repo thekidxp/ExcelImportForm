@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace TestingExcelImport
 {
@@ -32,6 +33,16 @@ namespace TestingExcelImport
             System.Windows.Forms.OpenFileDialog FileBrowser = new System.Windows.Forms.OpenFileDialog();
             FileBrowser.ShowDialog();
             txtFilePath.Text = FileBrowser.FileName;
+        }
+
+        private void btnHRAnalysis_Click(object sender, EventArgs e)
+        {
+            CustomImport.ImportData Import = new CustomImport.ImportData();
+            DirectoryInfo dirInfo = new DirectoryInfo(@"C:\git\WinApps\ANA3\");
+
+            string logfilepath = @"C:\HR_cleanup.txt";
+            Import.ClearFile(logfilepath);
+            Import.WalkDirectories(dirInfo, logfilepath);
         }
 
     }

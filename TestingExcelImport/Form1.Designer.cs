@@ -32,6 +32,7 @@
             this.lblFilePath = new System.Windows.Forms.Label();
             this.txtFilePath = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
+            this.btnHRAnalysis = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnImportData
@@ -49,9 +50,9 @@
             this.lblFilePath.AutoSize = true;
             this.lblFilePath.Location = new System.Drawing.Point(9, 172);
             this.lblFilePath.Name = "lblFilePath";
-            this.lblFilePath.Size = new System.Drawing.Size(146, 13);
+            this.lblFilePath.Size = new System.Drawing.Size(138, 13);
             this.lblFilePath.TabIndex = 1;
-            this.lblFilePath.Text = "Please enter path of excel file";
+            this.lblFilePath.Text = "Please enter path of text file";
             // 
             // txtFilePath
             // 
@@ -70,11 +71,22 @@
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
+            // btnHRAnalysis
+            // 
+            this.btnHRAnalysis.Location = new System.Drawing.Point(12, 12);
+            this.btnHRAnalysis.Name = "btnHRAnalysis";
+            this.btnHRAnalysis.Size = new System.Drawing.Size(75, 23);
+            this.btnHRAnalysis.TabIndex = 4;
+            this.btnHRAnalysis.Text = "HR Analysis";
+            this.btnHRAnalysis.UseVisualStyleBackColor = true;
+            this.btnHRAnalysis.Click += new System.EventHandler(this.btnHRAnalysis_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(313, 262);
+            this.Controls.Add(this.btnHRAnalysis);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.txtFilePath);
             this.Controls.Add(this.lblFilePath);
@@ -92,6 +104,7 @@
         private System.Windows.Forms.Label lblFilePath;
         private System.Windows.Forms.TextBox txtFilePath;
         private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.Button btnHRAnalysis;
     }
 }
 
