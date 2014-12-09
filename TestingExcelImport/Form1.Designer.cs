@@ -33,6 +33,7 @@
             this.txtFilePath = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnHRAnalysis = new System.Windows.Forms.Button();
+            this.btnLogAnal = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnImportData
@@ -81,11 +82,22 @@
             this.btnHRAnalysis.UseVisualStyleBackColor = true;
             this.btnHRAnalysis.Click += new System.EventHandler(this.btnHRAnalysis_Click);
             // 
+            // btnLogAnal
+            // 
+            this.btnLogAnal.Location = new System.Drawing.Point(98, 11);
+            this.btnLogAnal.Name = "btnLogAnal";
+            this.btnLogAnal.Size = new System.Drawing.Size(103, 23);
+            this.btnLogAnal.TabIndex = 5;
+            this.btnLogAnal.Text = "Logging Analysis";
+            this.btnLogAnal.UseVisualStyleBackColor = true;
+            this.btnLogAnal.Click += new System.EventHandler(this.btnLogAnal_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(313, 262);
+            this.Controls.Add(this.btnLogAnal);
             this.Controls.Add(this.btnHRAnalysis);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.txtFilePath);
@@ -105,6 +117,7 @@
         private System.Windows.Forms.TextBox txtFilePath;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Button btnHRAnalysis;
+        private System.Windows.Forms.Button btnLogAnal;
     }
 }
 

@@ -87,6 +87,48 @@ namespace CustomImport
             }
         }
 
+        //JCM, PL 09/10/2014: we're in ur git, forkin' ur repos.
+        public void WalkDirectoriesLogging(DirectoryInfo root, string logfilepath)
+        {
+            Regex getSubs = new Regex(@"(Sub|Function) ([\w\W]*?)(End Sub|End Function)");
+            Regex getFuncName = new Regex(@"(Sub|Function) (?<name>[\w]*)");
+            Regex getProcessingHistory = new Regex(@"(LibraryProcessingHistory_Save)");
+
+            DirectoryInfo[] subDirectories = root.GetDirectories();
+            FileInfo[] files = root.GetFiles("*.*");
+
+            foreach (var file in files)
+            {
+                string filepath = file.Directory.ToString() + "\\" + file.ToString();
+                string text = File.ReadAllText(filepath);
+                MatchCollection matches = getSubs.Matches(text);
+                foreach (Match theMatch in matches)
+                {
+                    string thefunc = theMatch.Value.ToString();
+                    Match funcMatch = getFuncName.Match(thefunc);
+                    string funcName = funcMatch.Groups[2].ToString();
+
+                    MatchCollection ProcessingHistoryCall = getProcessingHistory.Matches(thefunc);
+
+                    //if (ProcessingHistoryCall.Count > 0)
+                    //{
+                    //    File.AppendAllText(logfilepath, "Filename: " + file.FullName + Environment.NewLine + " FunctionName: " + funcName + Environment.NewLine + thefunc + Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine);
+                    //}
+                    foreach (Match attributeMatch in ProcessingHistoryCall)
+                    {
+                        string attribute = attributeMatch.Groups[1].ToString();
+                        File.AppendAllText(logfilepath, file.ToString() + "\t" + funcName + "\t" + attribute + "\r\n");
+                    }
+
+                }
+            }
+            foreach (var subDir in subDirectories)
+            {
+                WalkDirectoriesLogging(subDir, logfilepath);
+            }
+        }
+
+
 
         private static void IterateThroughExcelSheet(object[,] arr)
         {

@@ -45,5 +45,19 @@ namespace TestingExcelImport
             Import.WalkDirectories(dirInfo, logfilepath);
         }
 
+        private void btnLogAnal_Click(object sender, EventArgs e)
+        {
+            CustomImport.ImportData Import = new CustomImport.ImportData();
+            DirectoryInfo dirInfo = new DirectoryInfo(@"C:\git\WinApps\ANA2\");
+
+            string logfilepath = @"C:\Logging_Analysis.txt";
+            Import.ClearFile(logfilepath);
+            Import.WalkDirectoriesLogging(dirInfo, logfilepath);
+            System.Windows.Forms.MessageBox.Show("WHOOOO HOOOO!!!!!1111oneoneoneelevenalsosemicolon");
+
+        }
+
+
+
     }
 }
